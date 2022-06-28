@@ -16,7 +16,7 @@ class imu_classification():
         self.imu_sub = rospy.Subscriber('/imu', Imu, self.imu_callback, queue_size=1)
         self.classifi_pub = rospy.Publisher('/cwt_cnn_classfi', Int16, queue_size=1)
         self.imu_data = np.empty(shape=(0, 6))
-        self.cwt_data = np.empty(shape=(1, 32, 50, 6))
+        self.cwt_data = np.empty(shape=(50, 32, 6, 1))
         
     def reset_imudata(self):
         self.imu_data = np.empty(shape=(0, 6))
