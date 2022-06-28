@@ -38,6 +38,7 @@ class imu_classification():
             self.imu_data = np.delete(self.imu_data, (0), axis=0)
 
 if __name__ == "__main__":
+    os.chdir("~/catkin_ws/src/imu_classfication/model")
     rospy.init_node("imu_cnn")
     cnn = imu_classification()
     rospy.spin()
