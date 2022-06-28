@@ -32,9 +32,12 @@ class imu_classification():
             print(self.imu_data.shape, "imu shape")
             predict_data = self.imu_data.reshape(1, 50, 6, 1)
             prediction = cnn_model.predict(predict_data)
-            print(np.argmax(prediction[0]))
-            print(prediction[0])
-            #self.classifi_pub.publsih(prediction)
+            predict_index = int(np.argmax(prediction[0]))
+            self.classifi_pub.publsih(predict_index)
+            if predict_index == 0:
+                print("normal driving")
+            else:
+                print("vibaration detected")
             self.imu_data = np.delete(self.imu_data, (0), axis=0)
 
 if __name__ == "__main__":
