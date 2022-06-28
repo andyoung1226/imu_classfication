@@ -51,7 +51,7 @@ class imu_classification():
         if len(self.imu_data) == 50:
             #print(self.imu_data.shape, "imu shape")
             
-            to_cwt_data = self.imu_data.reshape(50, 6, 1)
+            to_cwt_data = self.imu_data.reshape(1, 50, 6)
             self.create_cwt_images(to_cwt_data, 32, 1)
             predict_data = self.cwt_data
             prediction = cnn_model.predict(predict_data)
