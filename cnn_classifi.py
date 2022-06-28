@@ -32,7 +32,8 @@ class imu_classification():
         if len(self.imu_data) == 50:
             print(self.imu_data.shape, "imu shape")
             predict_data = self.imu_data.reshape(50, 6, 1)
-            prediction = self.cnn_model.predict(predict_data)
+            cnnmodel = self.cnn_model
+            prediction = cnnmodel.predict(predict_data)
             print(prediction)
             #self.classifi_pub.publsih(prediction)
             self.imu_data = np.delete(self.imu_data, (0), axis=0)
