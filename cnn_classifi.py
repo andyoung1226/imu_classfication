@@ -33,7 +33,7 @@ class imu_classification():
             predict_data = self.imu_data.reshape(1, 50, 6, 1)
             prediction = cnn_model.predict(predict_data)
             predict_index = int(np.argmax(prediction[0]))
-            self.classifi_pub.publsih(predict_index)
+            self.classifi_pub.publish(predict_index)
             if predict_index == 0:
                 print("normal driving")
             else:
