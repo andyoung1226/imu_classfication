@@ -30,7 +30,8 @@ class imu_classification():
 
         self.imu_data = np.append(self.imu_data, np.array([a_v_x, a_v_y, a_v_z, l_a_x, l_a_y, l_a_z]), axis=0)
         if len(self.imu_data) == 50:
-            prediction = self.cnn_model.predict(self.imu_data)
+            predict_data = self.imu_data.reshape(50, 6, 1)
+            prediction = self.cnn_model.predict(predict_data)
             print(prediction)
             #self.classifi_pub.publsih(prediction)
             self.imu_data = np.delete(self.imu_data, (0), axis=0)
