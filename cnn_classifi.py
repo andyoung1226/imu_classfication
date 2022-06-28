@@ -16,7 +16,7 @@ class imu_classification():
         self.imu_sub = rospy.Subscriber('/imu', Imu, self.imu_callback, queue_size=1)
         self.classifi_pub = rospy.Publisher('/cnn_classfi', Int16, queue_size=1)
         self.imu_data = np.empty(shape=(0, 6))
-        self.cnn_model = models.load_model('~/catkin_ws/src/imu_classfication/model/cnn_model')
+        self.cnn_model = models.load_model('/home/wheelchair/catkin_ws/src/imu_classfication/model/cnn_model')
 
     def imu_callback(self, msg):
         ang_vel = msg.angular_velocity
@@ -38,7 +38,7 @@ class imu_classification():
             self.imu_data = np.delete(self.imu_data, (0), axis=0)
 
 if __name__ == "__main__":
-    os.chdir("~/catkin_ws/src/imu_classfication/model")
+    os.chdir("/home/wheelchair/catkin_ws/src/imu_classfication/model")
     rospy.init_node("imu_cnn")
     cnn = imu_classification()
     rospy.spin()
