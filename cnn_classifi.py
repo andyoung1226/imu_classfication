@@ -12,10 +12,11 @@ from sensor_msgs.msg import Imu
 from std_msgs.msg import Int16
 
 class imu_classification():
-    self.imu_sub = rospy.Subscriber('/imu', Imu, self.imu_callback(), queue_size=1)
-    self.classifi_pub = rospy.Publisher('/cnn_classfi', Int16, queue_size=1)
-    self.imu_data = np.empty(shape=(6,50))
-    self.cnn_model = models.load_model('/model/cnn_model')
+    def __init__(self):
+        self.imu_sub = rospy.Subscriber('/imu', Imu, self.imu_callback(), queue_size=1)
+        self.classifi_pub = rospy.Publisher('/cnn_classfi', Int16, queue_size=1)
+        self.imu_data = np.empty(shape=(6,50))
+        self.cnn_model = models.load_model('/model/cnn_model')
 
     def imu_callback(self, msg):
         ang_vel = msg.angular_velocty
