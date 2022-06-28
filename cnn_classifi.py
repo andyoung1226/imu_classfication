@@ -19,7 +19,7 @@ class imu_classification():
         self.cnn_model = models.load_model('/model/cnn_model')
 
     def imu_callback(self, msg):
-        ang_vel = msg.angular_velocty
+        ang_vel = msg.angular_velocity
         lin_acc = msg.linear_acceleration
         a_v_x = ang_vel.x
         a_v_y = ang_vel.y
