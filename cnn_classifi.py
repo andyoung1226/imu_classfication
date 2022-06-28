@@ -28,7 +28,7 @@ class imu_classification():
         l_a_y = lin_acc.y
         l_a_z = lin_acc.z
 
-        self.imu_data = np.append(self.imu_data, np.array([a_v_x, a_v_y, a_v_z, l_a_x, l_a_y, l_a_z]), axis=0)
+        self.imu_data = np.append(self.imu_data, np.array([[a_v_x, a_v_y, a_v_z, l_a_x, l_a_y, l_a_z]]), axis=0)
         if len(self.imu_data) == 50:
             print(self.imu_data.shape, "imu shape")
             predict_data = self.imu_data.reshape(50, 6, 1)
