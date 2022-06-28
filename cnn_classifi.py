@@ -30,7 +30,6 @@ class imu_classification():
         l_a_y = lin_acc.y
         l_a_z = lin_acc.z
 
-
         self.imu_data = np.append(self.imu_data, np.array([[a_v_x, a_v_y, a_v_z, l_a_x, l_a_y, l_a_z]]), axis=0)
         if len(self.imu_data) == 50:
             #print(self.imu_data.shape, "imu shape")
@@ -40,10 +39,11 @@ class imu_classification():
             self.classifi_pub.publish(predict_index)
             if predict_index == 0:
                 print("normal driving")
+                self.imu_data = np.delete(self.imu_data, (0), axis=0)
             else:
                 print("vibaration detected")
                 self.reset_imudata()
-            self.imu_data = np.delete(self.imu_data, (0), axis=0)
+            #self.imu_data = np.delete(self.imu_data, (0), axis=0)
 
 if __name__ == "__main__":
     cnn_model = models.load_model('/home/wheelchair/catkin_ws/src/imu_classfication/model/cnn_model')
