@@ -27,12 +27,12 @@ class imu_classification():
         l_a_y = lin_acc.y
         l_a_z = lin_acc.z
 
-    def reset_imudata(self):
-        self.imu_data = np.empty(shape=(6,50))
+    #def reset_imudata(self):
+    #    self.imu_data = np.empty(shape=(6,50))
 
         self.imu_data = np.append(self.imu_data, np.array([[a_v_x, a_v_y, a_v_z, l_a_x, l_a_y, l_a_z]]), axis=0)
         if len(self.imu_data) == 50:
-            print(self.imu_data.shape, "imu shape")
+            #print(self.imu_data.shape, "imu shape")
             predict_data = self.imu_data.reshape(1, 50, 6, 1)
             prediction = cnn_model.predict(predict_data)
             predict_index = int(np.argmax(prediction[0]))
@@ -41,7 +41,7 @@ class imu_classification():
                 print("normal driving")
             else:
                 print("vibaration detected")
-                self.reset_imudata()
+                #self.reset_imudata()
             self.imu_data = np.delete(self.imu_data, (0), axis=0)
 
 if __name__ == "__main__":
