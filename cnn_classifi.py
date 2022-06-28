@@ -17,6 +17,9 @@ class imu_classification():
         self.classifi_pub = rospy.Publisher('/cnn_classfi', Int16, queue_size=1)
         self.imu_data = np.empty(shape=(0, 6))
 
+    def reset_imudata(self):
+        self.imu_data = np.empty(shape=(0, 6))
+
     def imu_callback(self, msg):
         ang_vel = msg.angular_velocity
         lin_acc = msg.linear_acceleration
@@ -27,8 +30,6 @@ class imu_classification():
         l_a_y = lin_acc.y
         l_a_z = lin_acc.z
 
-    def reset_imudata(self):
-        self.imu_data = np.empty(shape=(0, 6))
 
         self.imu_data = np.append(self.imu_data, np.array([[a_v_x, a_v_y, a_v_z, l_a_x, l_a_y, l_a_z]]), axis=0)
         if len(self.imu_data) == 50:
