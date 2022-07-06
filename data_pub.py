@@ -17,7 +17,7 @@ class imu_classification():
         self.data_pub = rospy.Publisher('/data', Float32MultiArray, queue_size=1)
         self.imu_data = np.empty(shape=(0, 6))
         self.cwt_data = np.empty(shape=(1, 32, 50, 6))
-        
+        self.arraydata = Float32MultiArray()
     def reset_imudata(self):
         self.imu_data = np.empty(shape=(0, 6))
 
@@ -51,8 +51,8 @@ class imu_classification():
         if len(self.imu_data) == 50:
             to_cwt_data = self.imu_data.reshape(1, 50, 6)
             self.create_cwt_images(to_cwt_data, 32, 1)
-            predict_data = self.cwt_data
-            self.data_pub.publish(predict_data)
+            self.arraydata.data = self.cwt_data
+            self.data_pub.publish(self.arraydata)
             self.imu_data = np.delete(self.imu_data, (0), axis=0)
 
 if __name__ == "__main__":
