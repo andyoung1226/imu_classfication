@@ -51,7 +51,7 @@ class imu_classification():
         self.imu_data.append(a_v_y)
         self.imu_data.append(a_v_z)
         self.imu_data.append(l_a_x)
-        self.imu_data.append(l_a_Y)
+        self.imu_data.append(l_a_y)
         self.imu_data.append(l_a_z)
 
         if len(self.imu_data) == 300:
@@ -60,7 +60,9 @@ class imu_classification():
             #self.arraydata.data = self.cwt_data.tolist()
             self.arraydata.data = self.imu_data
             self.data_pub.publish(self.arraydata)
-            del self.imu_data[0]
+            for _ in range(6):
+                del self.imu_data[0]
+
 
 if __name__ == "__main__":
     rospy.init_node("data_pub")
