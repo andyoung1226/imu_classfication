@@ -9,7 +9,7 @@ import numpy as np
 import pywt
 import rospy
 from sensor_msgs.msg import Imu
-from std_msgs.msg import Int16, Float32MultiArray
+from std_msgs.msg import Int16, Float32MultiArray, Float32
 
 class imu_classification():
     def __init__(self):
