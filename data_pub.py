@@ -47,9 +47,9 @@ class imu_classification():
         l_a_y = lin_acc.y
         l_a_z = lin_acc.z
     
-        self.imu_data.append([a_v_x, a_v_y, a_v_z, l_a_x, l_a_y, l_a_z])
+        self.imu_data.append(a_v_x, a_v_y, a_v_z, l_a_x, l_a_y, l_a_z)
 
-        if len(self.imu_data) == 50:
+        if len(self.imu_data) == 300:
             #to_cwt_data = self.imu_data.reshape(1, 50, 6)
             #self.create_cwt_images(to_cwt_data, 32, 1)
             #self.arraydata.data = self.cwt_data.tolist()
