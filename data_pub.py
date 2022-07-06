@@ -51,7 +51,7 @@ class imu_classification():
         if len(self.imu_data) == 50:
             to_cwt_data = self.imu_data.reshape(1, 50, 6)
             self.create_cwt_images(to_cwt_data, 32, 1)
-            self.arraydata.data = self.cwt_data
+            self.arraydata.data = self.cwt_data.tolist()
             print(self.arraydata.data.type)
             #self.data_pub.publish(self.arraydata)
             self.imu_data = np.delete(self.imu_data, (0), axis=0)
