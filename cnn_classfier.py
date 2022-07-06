@@ -34,7 +34,7 @@ class imu_classification():
 
     def data_callback(self, msg):
         to_cwt_data = np.array(msg.data)
-        to_cwt_data = predict_data.reshape(1, 50, 6)
+        to_cwt_data = to_cwt_data.reshape(1, 50, 6)
         self.create_cwt_images(to_cwt_data, 32, 1)
         predict_data = self.cwt_data
         prediction = cnn_model.predict(predict_data)
