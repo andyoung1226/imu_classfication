@@ -15,7 +15,7 @@ from rospy.numpy_msg import numpy_msg
 class imu_classification():
     def __init__(self):
         self.imu_sub = rospy.Subscriber('/imu', Imu, self.imu_callback, queue_size=1)
-        self.data_pub = rospy.Publisher('/data', numpy_msg(float), queue_size=1)
+        self.data_pub = rospy.Publisher('/data', numpy_msg('float32'), queue_size=1)
         self.imu_data = np.empty(shape=(0, 6))
         self.cwt_data = np.empty(shape=(1, 32, 50, 6))
         self.arraydata = Float32MultiArray()
