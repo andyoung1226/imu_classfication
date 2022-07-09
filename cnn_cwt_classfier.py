@@ -38,7 +38,7 @@ class imu_classification():
         to_cwt_data = np.array(msg.data)
         to_cwt_data = to_cwt_data.reshape(1, 50, 6)
         for i in range(6):
-            self.filtered_data = signal.sosfilt(self.sos, to_cwt_data[:, :, i])
+            self.filtered_data[:, :, i] = signal.sosfilt(self.sos, to_cwt_data[:, :, i])
         self.create_cwt_images(self.filtered_data, 32, 1)
         predict_data = self.cwt_data
         prediction = cnn_model.predict(predict_data)
