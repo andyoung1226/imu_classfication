@@ -22,7 +22,7 @@ class imu_classification():
         to_cwt_data = np.array(msg.data)
         to_cwt_data = to_cwt_data.reshape(1, 50, 6)
         for i in range(6):
-            self.filtered_data = signal.sosfilt(sos, to_cwt_data[:, :, i])
+            self.filtered_data = signal.sosfilt(self.sos, to_cwt_data[:, :, i])
         predict_data = self.filtered_data
         prediction = cnn_model.predict(predict_data)
         predict_index = int(np.argmax(prediction[0]))
