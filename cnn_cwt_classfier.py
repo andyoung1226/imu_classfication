@@ -41,6 +41,7 @@ class imu_classification():
             self.filtered_data[:, :, i] = signal.sosfilt(self.sos, to_cwt_data[:, :, i])
         self.create_cwt_images(self.filtered_data, 32, 1)
         predict_data = self.cwt_data
+        predict_data = predict_data.reshape(1, 50, 6, 1)
         prediction = cnn_model.predict(predict_data)
         predict_index = int(np.argmax(prediction[0]))
         self.classifi_pub.publish(predict_index)
