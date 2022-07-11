@@ -43,8 +43,9 @@ def imu_callback(msg):
                 print(data.shape)
                 data_dic = {"imu_fault": data}
                 scipy.io.savemat('./fault_data/imu_fault_{0}.mat'.format(a), data_dic)
-                a += 1
                 print("data_saved", a)
+                a += 1
+
                 data_x = np.empty((0,1), float)
                 data_y = np.empty((0,1), float)
                 data_z = np.empty((0,1), float)
