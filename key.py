@@ -7,8 +7,10 @@ r = rospy.Rate(10) # 10hz
 while not rospy.is_shutdown():
     a = input()
     if a == 'a':
+        print("a pushed")
         data = 1
     else:
         data = 0
+        print("else pushed")
     pub.publish(data)
     r.sleep()
