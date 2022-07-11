@@ -24,13 +24,13 @@ class imu_classification():
         self.data_z = np.empty(shape=(1, 10, 10, 1))
         self.data = np.empty(shape=(1, 10, 10, 3))
     def data_callback_x(self, msg):
-        self.data_x = msg.data
+        self.data_x = msg.data.reshape(1, 10, 10, 1)
 
     def data_callback_y(self, msg):
-        self.data_y = msg.data
+        self.data_y = msg.data.reshape(1, 10, 10, 1)
 
     def data_callback_z(self, msg):
-        self.data_z = msg.data
+        self.data_z = msg.data.reshape(1, 10, 10, 1)
         self.data = np.concatenate((self.data_x, self.data_y, self.data_z), axis=3)
         #to_cwt_data = np.array(msg.data)
         #to_cwt_data = to_cwt_data.reshape(1, 50, 6)
