@@ -20,6 +20,7 @@ fault_dic = {"imu_normal_index": fault}
 scipy.io.savemat('fault_index.mat', fault_dic)
 
 def imu_callback(msg):
+        global data_x, data_y, data_z
         #angular_velocity = msg.angular_velocity
         linear_acceleration = msg.linear_acceleration
         #a_v_x = angular_velocity.x
