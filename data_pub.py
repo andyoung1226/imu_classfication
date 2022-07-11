@@ -14,28 +14,22 @@ from std_msgs.msg import Int16, Float32MultiArray, Float32
 class imu_classification():
     def __init__(self):
         self.imu_sub = rospy.Subscriber('/imu', Imu, self.imu_callback, queue_size=1)
-        self.data_pub = rospy.Publisher('/data', Float32MultiArray, queue_size=1)
-        self.imu_data = []
-        self.cwt_data = np.empty(shape=(1, 32, 50, 6))
-        self.arraydata = Float32MultiArray()
+        self.data_pub_x = rospy.Publisher('/data_x', Float32MultiArray, queue_size=1)
+        self.data_pub_y = rospy.Publisher('/data_y', Float32MultiArray, queue_size=1)
+        self.data_pub_z = rospy.Publisher('/data_z', Float32MultiArray, queue_size=1)
+
+        self.imu_data_x = []
+        self.imu_data_y = []
+        self.imu_data_z = []
+
+        #self.cwt_data = np.empty(shape=(1, 32, 50, 6))
+        self.arraydata_x = Float32MultiArray()
+        self.arraydata_y = Float32MultiArray()
+        self.arraydata_z = Float32MultiArray()
+
     def reset_imudata(self):
         self.imu_data = np.empty(shape=(0, 6))
 
-    def create_cwt_images(self, X, n_scales, n_samples, wavelet_name="morl"):
-        # n_samples = X.shape[0]
-        n_signals = X.shape[2]
-        n_times = X.shape[1]
-
-        scales = np.arange(1, n_scales + 1)
-        X_cwt = np.ndarray(shape=(n_samples, n_scales, n_times, n_signals), dtype='float32')
-
-        for sample in range(n_samples):
-            for signal in range(n_signals):
-                serie = X[sample, :, signal]
-                coeffs, freqs = pywt.cwt(serie, scales, wavelet_name)
-                X_cwt[sample, :, :, signal] = coeffs
-        
-        self.cwt_data = X_cwt
 
     def imu_callback(self, msg):
         ang_vel = msg.angular_velocity
@@ -47,19 +41,26 @@ class imu_classification():
         l_a_y = lin_acc.y
         l_a_z = lin_acc.z
     
-        self.imu_data.append(a_v_x)
-        self.imu_data.append(a_v_y)
-        self.imu_data.append(a_v_z)
-        self.imu_data.append(l_a_x)
-        self.imu_data.append(l_a_y)
-        self.imu_data.append(l_a_z)
+        #self.imu_data.append(a_v_x)
+        #self.imu_data.append(a_v_y)
+        #self.imu_data.append(a_v_z)
 
-        if len(self.imu_data) == 300:
+        self.imu_data_x.append(l_a_x)
+        self.imu_data_y.append(l_a_x)
+        self.imu_data_z.append(l_a_x)
+
+        if len(self.imu_data_x) == 100:
             #to_cwt_data = self.imu_data.reshape(1, 50, 6)
             #self.create_cwt_images(to_cwt_data, 32, 1)
             #self.arraydata.data = self.cwt_data.tolist()
-            self.arraydata.data = self.imu_data
-            self.data_pub.publish(self.arraydata)
+            self.arraydata_x.data = self.imu_data_x
+            self.arraydata_y.data = self.imu_data_y
+            self.arraydata_z.data = self.imu_data_z
+
+            self.data_pub_x.publish(self.arraydata_x)
+            self.data_pub_y.publish(self.arraydata_y)
+            self.data_pub_z.publish(self.arraydata_z)
+
             for _ in range(6):
                 del self.imu_data[0]
 
