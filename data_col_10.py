@@ -10,7 +10,7 @@ data_x = np.empty((0,1), float)
 data_y = np.empty((0,1), float)
 data_z = np.empty((0,1), float)
 a = 1
-
+data_col = False
 normal = np.zeros((10000,1), dtype=float)
 normal_dic = {"imu_normal_index": normal}
 scipy.io.savemat('normal_index.mat', normal_dic)
