@@ -9,7 +9,7 @@ import numpy as np
 data_x = np.empty((0,1), float)
 data_y = np.empty((0,1), float)
 data_z = np.empty((0,1), float)
-
+a = 1
 
 normal = np.zeros((10000,1), dtype=float)
 normal_dic = {"imu_normal_index": normal}
@@ -20,7 +20,7 @@ fault_dic = {"imu_normal_index": fault}
 scipy.io.savemat('fault_index.mat', fault_dic)
 
 def imu_callback(msg):
-        global data_x, data_y, data_z
+        global data_x, data_y, data_z, a
         #angular_velocity = msg.angular_velocity
         linear_acceleration = msg.linear_acceleration
         #a_v_x = angular_velocity.x
@@ -34,14 +34,15 @@ def imu_callback(msg):
         data_y = np.append(data_y, np.array([l_a_y]))
         data_z = np.append(data_z, np.array([l_a_z]))
 
-        if len(data_x) == 50000:
-                data_x = data_x.reshape(500, 10, 10, 1)
-                data_y = data_y.reshape(500, 10, 10, 1)
-                data_z = data_z.reshape(500, 10, 10, 1)
-                data = np.concatenate((data_x, data_y, data_z), axis=3)
+        if len(data_x) == 100:
+                data_x = data_x.reshape(10, 10, 1)
+                data_y = data_y.reshape(10, 10, 1)
+                data_z = data_z.reshape(10, 10, 1)
+                data = np.concatenate((data_x, data_y, data_z), axis=2)
                 print(data.shape)
-                data_dic = {"imu_normal": data}
-                scipy.io.savemat('imu_normal.mat', data_dic)
+                data_dic = {"imu_fault": data}
+                scipy.io.savemat('fault_data/imu_fault_%d.mat'.format(a), data_dic)
+                a += 1
                 print("data_saved")
 
 def listener():
