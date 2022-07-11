@@ -5,6 +5,7 @@ from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Quaternion, Vector3
 from std_msgs.msg import Float64
 import numpy as np
+import keyboard
 
 data_x = np.empty((0,1), float)
 data_y = np.empty((0,1), float)
@@ -29,10 +30,10 @@ def imu_callback(msg):
         l_a_x = linear_acceleration.x
         l_a_y = linear_acceleration.y
         l_a_z = linear_acceleration.z
-
-        data_x = np.append(data_x, np.array([l_a_x]))
-        data_y = np.append(data_y, np.array([l_a_y]))
-        data_z = np.append(data_z, np.array([l_a_z]))
+        if keyboard.read_key() == "a":
+                data_x = np.append(data_x, np.array([l_a_x]))
+                data_y = np.append(data_y, np.array([l_a_y]))
+                data_z = np.append(data_z, np.array([l_a_z]))
 
         if len(data_x) == 100:
                 data_x = data_x.reshape(1, 10, 10, 1)
