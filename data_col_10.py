@@ -44,6 +44,9 @@ def imu_callback(msg):
                 scipy.io.savemat('./fault_data/imu_fault_{0}.mat'.format(a), data_dic)
                 a += 1
                 print("data_saved")
+                data_x = np.empty((0,1), float)
+                data_y = np.empty((0,1), float)
+                data_z = np.empty((0,1), float)
 
 def listener():
         rospy.init_node('imudata_mat', anonymous=True)
