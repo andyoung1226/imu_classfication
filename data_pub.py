@@ -61,8 +61,9 @@ class imu_classification():
             self.data_pub_y.publish(self.arraydata_y)
             self.data_pub_z.publish(self.arraydata_z)
 
-            for _ in range(6):
-                del self.imu_data[0]
+            del self.imu_data_x[0]
+            del self.imu_data_y[0]
+            del self.imu_data_z[0]
 
 
 if __name__ == "__main__":
