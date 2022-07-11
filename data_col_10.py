@@ -41,7 +41,7 @@ def imu_callback(msg):
                 data = np.concatenate((data_x, data_y, data_z), axis=2)
                 print(data.shape)
                 data_dic = {"imu_fault": data}
-                scipy.io.savemat('fault_data/imu_fault_%d.mat'.format(a), data_dic)
+                scipy.io.savemat('./fault_data/imu_fault_%d.mat'.format(a), data_dic)
                 a += 1
                 print("data_saved")
 
