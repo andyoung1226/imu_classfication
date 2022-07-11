@@ -35,15 +35,15 @@ def imu_callback(msg):
         data_z = np.append(data_z, np.array([l_a_z]))
 
         if len(data_x) == 100:
-                data_x = data_x.reshape(10, 10, 1)
-                data_y = data_y.reshape(10, 10, 1)
-                data_z = data_z.reshape(10, 10, 1)
-                data = np.concatenate((data_x, data_y, data_z), axis=2)
+                data_x = data_x.reshape(1, 10, 10, 1)
+                data_y = data_y.reshape(1, 10, 10, 1)
+                data_z = data_z.reshape(1, 10, 10, 1)
+                data = np.concatenate((data_x, data_y, data_z), axis=3)
                 print(data.shape)
                 data_dic = {"imu_fault": data}
                 scipy.io.savemat('./fault_data/imu_fault_{0}.mat'.format(a), data_dic)
                 a += 1
-                print("data_saved")
+                print("data_saved", a)
                 data_x = np.empty((0,1), float)
                 data_y = np.empty((0,1), float)
                 data_z = np.empty((0,1), float)
