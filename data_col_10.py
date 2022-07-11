@@ -3,9 +3,8 @@ import rospy
 import scipy.io
 from sensor_msgs.msg import Imu
 from geometry_msgs.msg import Quaternion, Vector3
-from std_msgs.msg import Float64
+from std_msgs.msg import Float64, Int8
 import numpy as np
-import keyboard
 
 data_x = np.empty((0,1), float)
 data_y = np.empty((0,1), float)
@@ -59,6 +58,7 @@ def keyCB(msg):
 def listener():
         rospy.init_node('imudata_mat', anonymous=True)
         rospy.Subscriber("/imu", Imu, imu_callback)
+        rospy.Subscriber("/keyboard", Int8, keyCB)
         rospy.spin()
 
 if __name__=='__main__':
