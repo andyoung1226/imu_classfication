@@ -21,7 +21,7 @@ fault_dic = {"imu_normal_index": fault}
 scipy.io.savemat('fault_index.mat', fault_dic)
 
 def imu_callback(msg):
-        global data_x, data_y, data_z, a
+        global data_x, data_y, data_z, a, data_col
         #angular_velocity = msg.angular_velocity
         linear_acceleration = msg.linear_acceleration
         #a_v_x = angular_velocity.x
@@ -30,7 +30,8 @@ def imu_callback(msg):
         l_a_x = linear_acceleration.x
         l_a_y = linear_acceleration.y
         l_a_z = linear_acceleration.z
-        if keyboard.read_key() == "a":
+
+        if data_col == True:
                 data_x = np.append(data_x, np.array([l_a_x]))
                 data_y = np.append(data_y, np.array([l_a_y]))
                 data_z = np.append(data_z, np.array([l_a_z]))
@@ -49,6 +50,12 @@ def imu_callback(msg):
                 data_y = np.empty((0,1), float)
                 data_z = np.empty((0,1), float)
 
+def keyCB(msg):
+        global data_col
+        if msg.data == 1:
+                data_col = True
+        else:
+                data_col = False
 def listener():
         rospy.init_node('imudata_mat', anonymous=True)
         rospy.Subscriber("/imu", Imu, imu_callback)
